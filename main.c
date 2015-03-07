@@ -20,17 +20,23 @@ void ccopy(char *o, char *i, int l) {
   for(idx=0;idx < l; idx++) o[idx]=i[idx];
 }
 
+char s1[10] = {'K', 'A', 'S', 'H', 'Y', 'A', 'P', '\0'};
+char s2[10] = {'A', 'A', 'A', 'A', 'A', 'A', 'A', '\0'};
+
+
 int main() {
-  char s1[] = {'K', 'A', 'S', 'H', 'Y', 'A', 'P', '\0'};
-  char s2[] = {'A', 'A', 'A', 'A', 'A', 'A', 'A', '\0'};
   T t;
+  void *ptr;
   setVal(&t);
   printf("hello world %ld %ld\n",t.a, t.b);
   printf("sum = %d\n", sum(10, 20));
-  printf("%s\n", s1);
-  printf("%s\n", s2);
+  ptr = (void *)s1;
+  printf("%p\n", ptr);
+  ptr = (void *)s2;
+  printf("%p\n", ptr);
+
   //ccopy(s2, s1, 7);
-  copystr(s2, s1, 7);
+  copystr(s2, s1, 3);
   printf("%s\n", s2);
 
 }

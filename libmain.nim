@@ -18,11 +18,13 @@ proc setVal(t: ptr T) {.exportc.} =
   populatestr(cast[cstring](addr x))
   return
 
-proc copystr(o: var cstring, i: cstring, l: int) : cstring {.exportc.} =
-  printf("Does this work %s\n", o)
-  printf("Does this work %s\n", i)
-#  for idx in 0 .. l:
-#    o[idx] = i[idx]
+proc copystr(o1: ptr uint8, input: cstring, l: int) : cstring {.exportc.} =
+  printf("copystr in nim\n")
+  var o: cstring = cast[cstring](o1)  
+  printf("Does this work %s\n", input)
+  printf("Does this work123 %s\n", o)
+  for idx in 0 .. l:
+     o[idx] = input[idx]
   o
 
 
