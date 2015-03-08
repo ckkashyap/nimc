@@ -75,7 +75,34 @@ macro declArray (name; size, ty; args: varargs[expr]): stmt =
       result
   ))
  
-declArray(y, 5,int, 1,2, 4,9)
+declArray(y, 5,int, 1,2, 4,1234)
 echo y.repr
 
 echo "AAAAAAAAAAAAAAAAAAAA"
+
+macro declArray1 (name, size, ty; args: varargs[expr]): expr =
+  assert args.len mod 2 == 0, "need even # of args"
+  # result = newNimNode(nnkStmtListExpr)
+  # let innerName = genSym(nskVar, "arr")
+  # result.add newNimNode(nnkVarSection).add(
+  #   newIdentDefs(innerName, newNimNode(nnkBracketExpr).add(ident"array", size, ty)))
+  
+  let res = newNimNode(nnkBracket)
+  for i in 1 .. size.intval: res.add newLit(0)
+ 
+  for i in countup(0, len(args)-1, 2):
+    res[args[i].intval.int] = args[i+1]
+    # result.add newAssignment(
+    #   newNimNode(nnkBracketExpr).add(innerName, args[i]),
+    #   args[i+1]
+    # )
+  # result.add innerName
+  result = newNimNode(nnkVarSection).add(
+    newIdentDefs(
+      name, 
+      newNimNode(nnkBracketExpr).add(ident"array", size, ty),
+      res
+  ))
+ 
+declArray1(z, 5,int, 1,2, 3,4)
+echo z.repr
